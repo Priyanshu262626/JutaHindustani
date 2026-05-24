@@ -67,11 +67,11 @@ public class SecurityConfig {
                 // Auth public endpoints
                 .requestMatchers("/api/v1/auth/**", "/api/auth/**").permitAll()
                 // Products public read access
-                .requestMatchers(HttpMethod.GET, "/api/v1/products/**", "/api/products/**").permitAll()
+                .requestMatchers(HttpMethod.GET, "/api/v1/products", "/api/v1/products/**", "/api/products", "/api/products/**").permitAll()
                 // Admin product writes
-                .requestMatchers(HttpMethod.POST, "/api/v1/products/**", "/api/products/**").hasRole("ADMIN")
-                .requestMatchers(HttpMethod.PUT, "/api/v1/products/**", "/api/products/**").hasRole("ADMIN")
-                .requestMatchers(HttpMethod.DELETE, "/api/v1/products/**", "/api/products/**").hasRole("ADMIN")
+                .requestMatchers(HttpMethod.POST, "/api/v1/products", "/api/v1/products/**", "/api/products", "/api/products/**").hasRole("ADMIN")
+                .requestMatchers(HttpMethod.PUT, "/api/v1/products", "/api/v1/products/**", "/api/products", "/api/products/**").hasRole("ADMIN")
+                .requestMatchers(HttpMethod.DELETE, "/api/v1/products", "/api/v1/products/**", "/api/products", "/api/products/**").hasRole("ADMIN")
                 // Admin endpoints
                 .requestMatchers("/api/v1/admin/**", "/api/admin/**").hasRole("ADMIN")
                 // All other endpoints require authentication

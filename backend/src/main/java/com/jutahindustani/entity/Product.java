@@ -30,10 +30,12 @@ public class Product {
     private String brand;
 
     @Column(nullable = false)
-    private String gender; // e.g. Men, Women, Unisex
+    @Builder.Default
+    private String gender = "Unisex"; // e.g. Men, Women, Unisex
 
     @Column(nullable = false)
-    private String color;
+    @Builder.Default
+    private String color = "Multicolor";
 
     @Column(nullable = false)
     private Double price;
@@ -99,9 +101,56 @@ public class Product {
         return category != null ? category.getName() : null;
     }
 
-    // For compatibility, category getter returns its name as string
     @com.fasterxml.jackson.annotation.JsonProperty("category")
     public String getCategoryComp() {
         return category != null ? category.getName() : null;
+    }
+
+    @com.fasterxml.jackson.annotation.JsonProperty("name")
+    public void setName(String name) {
+        this.title = name;
+    }
+
+    @com.fasterxml.jackson.annotation.JsonProperty("imageUrl")
+    public void setImageUrlComp(String url) {
+        this.productImages = new ArrayList<>();
+        if (url != null && !url.trim().isEmpty()) {
+            ProductImage pi = ProductImage.builder()
+                    .imageUrl(url)
+                    .product(this)
+                    .build();
+            this.productImages.add(pi);
+        }
+    }
+
+    @com.fasterxml.jackson.annotation.JsonProperty("sizes")
+    public void setSizesComp(String sizesStr) {
+        this.productSizes = new ArrayList<>();
+        if (sizesStr != null && !sizesStr.trim().isEmpty()) {
+            String[] sizeArray = sizesStr.split(",");
+            for (String size : sizeArray) {
+                String cleanSize = size.trim();
+                if (!cleanSize.isEmpty()) {
+                    ProductSize ps = ProductSize.builder()
+                            .size(cleanSize)
+                            .quantity(12)
+                            .product(this)
+                            .build();
+                    this.productSizes.add(ps);
+                }
+            }
+        }
+    }
+
+    @com.fasterxml.jackson.annotation.JsonProperty("category")
+    public void setCategoryComp(Object categoryObj) {
+        if (categoryObj instanceof String) {
+            this.category = Category.builder().name((String) categoryObj).build();
+        } else if (categoryObj instanceof java.util.Map) {
+            java.util.Map<?, ?> map = (java.util.Map<?, ?>) categoryObj;
+            String name = (String) map.get("name");
+            Long id = map.get("id") != null ? Long.valueOf(map.get("id").toString()) : null;
+            this.category = Category.builder().id(id).name(name).build();
+        }
     }
 }
