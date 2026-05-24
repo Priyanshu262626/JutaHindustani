@@ -20,7 +20,10 @@ export default function AdminAddProduct() {
       brand: '',
       description: '',
       price: '',
+      discountPrice: '',
       category: 'SNEAKERS',
+      gender: 'Unisex',
+      color: 'Multicolor',
       sizes: '7,8,9,10',
       stock: '10',
       imageUrl: '',
@@ -37,6 +40,9 @@ export default function AdminAddProduct() {
       brand: data.brand,
       description: data.description,
       price: parseFloat(data.price),
+      discountPrice: data.discountPrice ? parseFloat(data.discountPrice) : null,
+      gender: data.gender,
+      color: data.color,
       category: data.category,
       sizes: data.sizes,
       stock: parseInt(data.stock),
@@ -126,7 +132,7 @@ export default function AdminAddProduct() {
             )}
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+          <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
             <div>
               <label className="block text-black text-xs font-bold uppercase tracking-wider mb-2">Price (INR) *</label>
               <input
@@ -141,6 +147,15 @@ export default function AdminAddProduct() {
               {errors.price && (
                 <span className="text-red-500 text-xs mt-1 block font-semibold">{errors.price.message}</span>
               )}
+            </div>
+            <div>
+              <label className="block text-black text-xs font-bold uppercase tracking-wider mb-2">Discount Price</label>
+              <input
+                type="number"
+                placeholder="3999"
+                {...register('discountPrice')}
+                className="w-full nike-input font-mono"
+              />
             </div>
             <div>
               <label className="block text-black text-xs font-bold uppercase tracking-wider mb-2">Stock Quantity *</label>
@@ -173,6 +188,32 @@ export default function AdminAddProduct() {
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div>
+              <label className="block text-black text-xs font-bold uppercase tracking-wider mb-2">Gender *</label>
+              <select
+                {...register('gender')}
+                className="w-full bg-white border border-neutral-200 rounded px-3 py-2.5 text-black text-xs font-bold uppercase tracking-wider focus:outline-none focus:border-black cursor-pointer"
+              >
+                <option value="Unisex">Unisex</option>
+                <option value="Men">Men</option>
+                <option value="Women">Women</option>
+              </select>
+            </div>
+            <div>
+              <label className="block text-black text-xs font-bold uppercase tracking-wider mb-2">Color *</label>
+              <input
+                type="text"
+                placeholder="e.g. Red, Core Black, Multicolor"
+                {...register('color', { required: 'Color is required' })}
+                className={`w-full nike-input ${errors.color ? 'border-red-500' : ''}`}
+              />
+              {errors.color && (
+                <span className="text-red-500 text-xs mt-1 block font-semibold">{errors.color.message}</span>
+              )}
+            </div>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div>
               <label className="block text-black text-xs font-bold uppercase tracking-wider mb-2">Sizes (Comma separated) *</label>
               <input
                 type="text"
@@ -188,7 +229,7 @@ export default function AdminAddProduct() {
               <label className="block text-black text-xs font-bold uppercase tracking-wider mb-2">Image path / URL</label>
               <input
                 type="text"
-                placeholder="e.g. /images/shoes/adidas-ultraboost.jpg"
+                placeholder="e.g. /images/shoes/adidas-ultrboost.jpg"
                 {...register('imageUrl')}
                 className="w-full nike-input font-mono"
               />
