@@ -54,7 +54,7 @@ export default function Login() {
             Sign In
           </h2>
           <p className="text-xs font-semibold text-gray-400 mt-2 uppercase tracking-wider">
-            Enter your JutaHindustani account credentials
+            Enter your Soltrix account credentials
           </p>
         </div>
 
@@ -136,7 +136,7 @@ export default function Login() {
         {/* Link to Register */}
         <div className="text-center mt-6 pt-6 border-t border-neutral-100">
           <p className="text-xs font-bold uppercase tracking-wider text-gray-400">
-            New to JutaHindustani?{' '}
+            New to Soltrix?{' '}
             <Link to="/register" className="text-black hover:underline font-black">
               Create an account
             </Link>

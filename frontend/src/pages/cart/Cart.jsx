@@ -41,7 +41,7 @@ export default function Cart() {
 
   return (
     <div className="bg-white min-h-screen">
-      <div className="max-w-7xl mx-auto px-6 py-12">
+      <div className="max-w-8xl mx-auto px-6 py-12">
         <h1 className="text-3xl font-black text-black text-left uppercase tracking-tighter mb-8 border-b border-neutral-100 pb-4">
           Shopping Bag
         </h1>

@@ -1,4 +1,4 @@
-# 👟 JutaHindustani — Frontend Client
+# 👟 Soltrix — Frontend Client
 
 A modern single-page application (SPA) powered by **React 19**, built using **Vite**, and styled with **Tailwind CSS v4**.
 

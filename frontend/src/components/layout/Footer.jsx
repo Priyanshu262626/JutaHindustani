@@ -4,12 +4,12 @@ import { Heart } from 'lucide-react';
 export default function Footer() {
   return (
     <footer className="border-t border-gray-200 bg-neutral-50 py-10 px-6 mt-auto">
-      <div className="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-center space-y-6 md:space-y-0">
+      <div className="max-w-8xl mx-auto flex flex-col md:flex-row justify-between items-center space-y-6 md:space-y-0">
         
         {/* Left branding */}
         <div className="flex flex-col md:flex-row items-center md:space-x-4 space-y-2 md:space-y-0 text-center md:text-left">
-          <span className="text-sm font-extrabold tracking-widest text-black">JUTA HINDUSTANI</span>
-          <span className="text-gray-400 text-xs font-mono">© {new Date().getFullYear()} JutaHindustani, Inc. All rights reserved.</span>
+          <span className="text-sm md:text-base font-black tracking-[0.22em] text-black">SOLTRIX</span>
+          <span className="text-gray-400 text-xs font-mono">© {new Date().getFullYear()} Soltrix, Inc. All rights reserved.</span>
         </div>
 
         {/* Center message */}

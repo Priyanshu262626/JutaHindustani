@@ -121,7 +121,7 @@ export default function ProductDetails() {
 
   return (
     <div className="bg-white min-h-screen">
-      <div className="max-w-7xl mx-auto px-6 py-12">
+      <div className="max-w-8xl mx-auto px-6 py-12">
         
         {/* Back Link */}
         <Link to="/shop" className="inline-flex items-center text-gray-400 hover:text-black mb-8 transition-colors text-xs font-bold uppercase tracking-wider">
@@ -198,14 +198,12 @@ export default function ProductDetails() {
 
             {/* Reusable AddToCart Button */}
             {product.stock > 0 && (
-              <div className="pt-4 flex flex-col sm:flex-row gap-4">
-                <div className="flex-grow">
-                  <AddToCartButton
-                    onClick={handleAddToCart}
-                    loading={adding}
-                    text={user ? 'Add to bag' : 'Sign in to buy'}
-                  />
-                </div>
+              <div className="pt-4 flex flex-col sm:flex-row items-center gap-4">
+                <AddToCartButton
+                  onClick={handleAddToCart}
+                  loading={adding}
+                  text={user ? 'Add to bag' : 'Sign in to buy'}
+                />
                 {(!user || user.role === 'ROLE_CUSTOMER') && (
                   <button
                     onClick={handleToggleWishlist}
