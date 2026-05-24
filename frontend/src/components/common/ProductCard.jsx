@@ -1,9 +1,31 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { Tag } from 'lucide-react';
+import { Tag, Heart } from 'lucide-react';
+import { useAuth } from '../../context/AuthContext';
+import { useToast } from './Toast';
 
 export default function ProductCard({ product }) {
   if (!product) return null;
+
+  const { user, toggleWishlist, isInWishlist } = useAuth();
+  const showToast = useToast();
+
+  const isFavorite = user ? isInWishlist(product.id) : false;
+
+  const handleFavClick = async (e) => {
+    e.preventDefault();
+    e.stopPropagation();
+    if (!user) {
+      showToast('Please sign in to save favorites!', 'info');
+      return;
+    }
+    try {
+      await toggleWishlist(product.id);
+      showToast(isFavorite ? 'Removed from Favorites' : 'Saved to Favorites', 'success');
+    } catch (err) {
+      showToast('Failed to update favorites', 'error');
+    }
+  };
 
   return (
     <Link
@@ -12,6 +34,19 @@ export default function ProductCard({ product }) {
     >
       {/* Image Container */}
       <div className="aspect-square relative p-6 bg-white flex items-center justify-center border-b border-white overflow-hidden">
+        {/* Wishlist Button Overlay */}
+        {(!user || user.role === 'ROLE_CUSTOMER') && (
+          <button
+            onClick={handleFavClick}
+            className="absolute top-3 right-3 z-10 w-8 h-8 rounded-full bg-white/80 backdrop-blur-xs border border-neutral-200 flex items-center justify-center text-black hover:bg-white hover:scale-105 transition-all shadow-xxs cursor-pointer"
+            aria-label="Toggle Wishlist"
+          >
+            <Heart 
+              size={16} 
+              className={isFavorite ? "fill-red-500 text-red-500" : "text-black"} 
+            />
+          </button>
+        )}
         <img
           src={product.imageUrl}
           alt={product.name}

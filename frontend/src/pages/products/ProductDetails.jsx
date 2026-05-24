@@ -12,12 +12,12 @@ import QuantitySelector from '../../components/product/QuantitySelector';
 import AddToCartButton from '../../components/product/AddToCartButton';
 import RelatedProducts from '../../components/product/RelatedProducts';
 
-import { ArrowLeft, Tag, Info, AlertTriangle } from 'lucide-react';
+import { ArrowLeft, Tag, Info, AlertTriangle, Heart } from 'lucide-react';
 
 export default function ProductDetails() {
   const { id } = useParams();
   const navigate = useNavigate();
-  const { user, addToCart } = useAuth();
+  const { user, addToCart, toggleWishlist, isInWishlist } = useAuth();
   const toast = useToast();
 
   const [product, setProduct] = useState(null);
@@ -27,6 +27,29 @@ export default function ProductDetails() {
   const [selectedSize, setSelectedSize] = useState('');
   const [quantity, setQuantity] = useState(1);
   const [adding, setAdding] = useState(false);
+  const [togglingFav, setTogglingFav] = useState(false);
+
+  const isFavorite = user ? isInWishlist(product?.id) : false;
+
+  const handleToggleWishlist = async () => {
+    if (!user) {
+      navigate('/login', { state: { from: `/product/${id}` } });
+      return;
+    }
+    if (user.role === 'ROLE_ADMIN') {
+      toast('Administrators cannot add items to favorites.', 'error');
+      return;
+    }
+    setTogglingFav(true);
+    try {
+      await toggleWishlist(product.id);
+      toast(isFavorite ? 'Removed from favorites' : 'Added to favorites', 'success');
+    } catch (err) {
+      toast('Failed to update favorites', 'error');
+    } finally {
+      setTogglingFav(false);
+    }
+  };
 
   useEffect(() => {
     fetchProductDetails();
@@ -175,12 +198,24 @@ export default function ProductDetails() {
 
             {/* Reusable AddToCart Button */}
             {product.stock > 0 && (
-              <div className="pt-4">
-                <AddToCartButton
-                  onClick={handleAddToCart}
-                  loading={adding}
-                  text={user ? 'Add to bag' : 'Sign in to buy'}
-                />
+              <div className="pt-4 flex flex-col sm:flex-row gap-4">
+                <div className="flex-grow">
+                  <AddToCartButton
+                    onClick={handleAddToCart}
+                    loading={adding}
+                    text={user ? 'Add to bag' : 'Sign in to buy'}
+                  />
+                </div>
+                {(!user || user.role === 'ROLE_CUSTOMER') && (
+                  <button
+                    onClick={handleToggleWishlist}
+                    disabled={togglingFav}
+                    className="border border-neutral-300 rounded px-6 py-4 flex items-center justify-center font-bold text-xs uppercase tracking-wider transition-all hover:bg-neutral-50 cursor-pointer w-full sm:w-auto gap-2 bg-white text-black min-h-[50px] shrink-0"
+                  >
+                    <Heart size={16} className={isFavorite ? "fill-red-500 text-red-500" : "text-black"} />
+                    <span>{isFavorite ? 'Favorite' : 'Add to Favorites'}</span>
+                  </button>
+                )}
               </div>
             )}
 

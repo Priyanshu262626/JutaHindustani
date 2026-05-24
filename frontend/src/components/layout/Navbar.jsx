@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
 import { Link, useNavigate, useLocation } from 'react-router-dom';
 import { useAuth } from '../../context/AuthContext';
-import { ShoppingBag, LogOut, Menu, X, User, Shield } from 'lucide-react';
+import { ShoppingBag, LogOut, Menu, X, User, Shield, Heart } from 'lucide-react';
 
 export default function Navbar() {
-  const { user, cart, logout } = useAuth();
+  const { user, cart, logout, wishlist = [] } = useAuth();
   const navigate = useNavigate();
   const location = useLocation();
   const [isOpen, setIsOpen] = useState(false);
@@ -93,6 +93,22 @@ export default function Navbar() {
             </Link>
           )}
 
+          {/* Wishlist Icon in Nav */}
+          {(!user || user.role === 'ROLE_CUSTOMER') && (
+            <Link 
+              to="/wishlist" 
+              className="relative p-1 text-black hover:opacity-75 transition-opacity"
+              aria-label="Wishlist"
+            >
+              <Heart size={22} className={wishlist.length > 0 ? "fill-black text-black" : "text-black"} strokeWidth={2} />
+              {wishlist.length > 0 && (
+                <span className="absolute -top-1.5 -right-1.5 bg-black text-white text-xxs w-4.5 h-4.5 rounded-full flex items-center justify-center font-bold">
+                  {wishlist.length}
+                </span>
+              )}
+            </Link>
+          )}
+
           {/* Cart Icon in Nav */}
           {(!user || user.role === 'ROLE_CUSTOMER') && (
             <Link 
@@ -113,14 +129,24 @@ export default function Navbar() {
         {/* Mobile buttons */}
         <div className="md:hidden flex items-center space-x-4">
           {(!user || user.role === 'ROLE_CUSTOMER') && (
-            <Link to="/cart" className="relative p-1 text-black">
-              <ShoppingBag size={22} strokeWidth={2} />
-              {cartCount > 0 && (
-                <span className="absolute -top-1.5 -right-1.5 bg-black text-white text-xxs w-4.5 h-4.5 rounded-full flex items-center justify-center font-bold">
-                  {cartCount}
-                </span>
-              )}
-            </Link>
+            <>
+              <Link to="/wishlist" className="relative p-1 text-black" aria-label="Wishlist">
+                <Heart size={22} className={wishlist.length > 0 ? "fill-black text-black" : "text-black"} strokeWidth={2} />
+                {wishlist.length > 0 && (
+                  <span className="absolute -top-1.5 -right-1.5 bg-black text-white text-xxs w-4.5 h-4.5 rounded-full flex items-center justify-center font-bold">
+                    {wishlist.length}
+                  </span>
+                )}
+              </Link>
+              <Link to="/cart" className="relative p-1 text-black" aria-label="Cart">
+                <ShoppingBag size={22} strokeWidth={2} />
+                {cartCount > 0 && (
+                  <span className="absolute -top-1.5 -right-1.5 bg-black text-white text-xxs w-4.5 h-4.5 rounded-full flex items-center justify-center font-bold">
+                    {cartCount}
+                  </span>
+                )}
+              </Link>
+            </>
           )}
           <button 
             onClick={() => setIsOpen(!isOpen)} 
@@ -163,6 +189,13 @@ export default function Navbar() {
                     className="text-sm font-bold tracking-wider uppercase text-gray-900"
                   >
                     My Orders
+                  </Link>
+                  <Link 
+                    to="/wishlist" 
+                    onClick={() => setIsOpen(false)} 
+                    className="text-sm font-bold tracking-wider uppercase text-gray-900"
+                  >
+                    My Favorites ({wishlist.length})
                   </Link>
                 </>
               )}

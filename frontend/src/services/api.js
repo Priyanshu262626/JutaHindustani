@@ -95,6 +95,21 @@ export const api = {
       apiClient.get(`/orders/${orderId}`),
   },
 
+  // Wishlist
+  wishlist: {
+    get: () =>
+      apiClient.get('/wishlist'),
+
+    add: (productId) =>
+      apiClient.post(`/wishlist/add/${productId}`),
+
+    remove: (productId) =>
+      apiClient.delete(`/wishlist/remove/${productId}`),
+
+    check: (productId) =>
+      apiClient.get(`/wishlist/check/${productId}`),
+  },
+
   // Admin Order Management
   admin: {
     getAllOrders: () =>
@@ -104,3 +119,4 @@ export const api = {
       apiClient.put(`/admin/orders/${orderId}/status`, null, { params: { status } }),
   },
 };
+

@@ -7,6 +7,7 @@ export const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
   const [token, setToken] = useState(null);
   const [cart, setCart] = useState(null);
+  const [wishlist, setWishlist] = useState([]);
   const [loading, setLoading] = useState(true);
 
   // Initialize session on mount
@@ -19,9 +20,10 @@ export const AuthProvider = ({ children }) => {
       const parsedUser = JSON.parse(storedUser);
       setUser(parsedUser);
       
-      // If user is a customer, load their database cart
+      // If user is a customer, load their database cart & wishlist
       if (parsedUser.role === 'ROLE_CUSTOMER') {
         loadCart();
+        loadWishlist();
       }
     }
     setLoading(false);
@@ -33,6 +35,15 @@ export const AuthProvider = ({ children }) => {
       setCart(userCart);
     } catch (err) {
       console.error('Failed to load cart:', err);
+    }
+  };
+
+  const loadWishlist = async () => {
+    try {
+      const userWishlist = await api.wishlist.get();
+      setWishlist(userWishlist);
+    } catch (err) {
+      console.error('Failed to load wishlist:', err);
     }
   };
 
@@ -57,8 +68,12 @@ export const AuthProvider = ({ children }) => {
         // Load their cart immediately
         const userCart = await api.cart.get();
         setCart(userCart);
+        // Load their wishlist immediately
+        const userWishlist = await api.wishlist.get();
+        setWishlist(userWishlist);
       } else {
         setCart(null); // Admin has no cart
+        setWishlist([]);
       }
       
       setLoading(false);
@@ -79,6 +94,7 @@ export const AuthProvider = ({ children }) => {
     setUser(null);
     setToken(null);
     setCart(null);
+    setWishlist([]);
   };
 
   // Cart operations exposed globally
@@ -122,10 +138,48 @@ export const AuthProvider = ({ children }) => {
     }
   };
 
+  // Wishlist operations
+  const addToWishlist = async (productId) => {
+    if (!user) throw new Error('Please login to add items to wishlist');
+    try {
+      await api.wishlist.add(productId);
+      await loadWishlist();
+    } catch (err) {
+      console.error(err);
+      throw err;
+    }
+  };
+
+  const removeFromWishlist = async (productId) => {
+    if (!user) throw new Error('Please login to remove items from wishlist');
+    try {
+      await api.wishlist.remove(productId);
+      await loadWishlist();
+    } catch (err) {
+      console.error(err);
+      throw err;
+    }
+  };
+
+  const toggleWishlist = async (productId) => {
+    if (!user) throw new Error('Please login to manage wishlist');
+    const isFav = wishlist.some(item => item.product.id === productId);
+    if (isFav) {
+      await removeFromWishlist(productId);
+    } else {
+      await addToWishlist(productId);
+    }
+  };
+
+  const isInWishlist = (productId) => {
+    return wishlist.some(item => item.product.id === productId);
+  };
+
   const value = {
     user,
     token,
     cart,
+    wishlist,
     loading,
     login,
     signup,
@@ -134,7 +188,11 @@ export const AuthProvider = ({ children }) => {
     addToCart,
     updateCartQuantity,
     removeFromCart,
-    clearCart
+    clearCart,
+    addToWishlist,
+    removeFromWishlist,
+    toggleWishlist,
+    isInWishlist
   };
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;

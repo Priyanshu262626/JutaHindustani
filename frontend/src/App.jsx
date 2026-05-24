@@ -13,6 +13,7 @@ import Cart from './pages/cart/Cart';
 import Checkout from './pages/checkout/Checkout';
 import OrderSuccess from './pages/checkout/OrderSuccess';
 import Orders from './pages/checkout/Orders';
+import Wishlist from './pages/wishlist/Wishlist';
 
 // Admin Imports
 import AdminDashboard from './pages/admin/AdminDashboard';
@@ -67,6 +68,14 @@ function MainAppLayout() {
             element={
               <ProtectedRoute>
                 <Orders />
+              </ProtectedRoute>
+            } 
+          />
+          <Route 
+            path="/wishlist" 
+            element={
+              <ProtectedRoute>
+                <Wishlist />
               </ProtectedRoute>
             } 
           />
