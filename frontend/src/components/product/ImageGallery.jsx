@@ -23,7 +23,7 @@ export default function ImageGallery({ imageUrl, alt = 'Shoe Image' }) {
   return (
     <div className="flex flex-col space-y-4 w-full">
       {/* Main Large Display */}
-      <div className="p-8 bg-white rounded-lg flex items-center justify-center relative overflow-hidden h-[350px] md:h-[450px] border border-neutral-200/40">
+      <div className="p-8 bg-white rounded-3xl flex items-center justify-center relative overflow-hidden h-[350px] md:h-[430px] border border-neutral-200/60 shadow-xs">
         <img
           src={imageUrl}
           alt={alt}
@@ -32,14 +32,16 @@ export default function ImageGallery({ imageUrl, alt = 'Shoe Image' }) {
       </div>
 
       {/* Thumbnails row */}
-      <div className="grid grid-cols-4 gap-4">
+      <div className="flex justify-start space-x-3 pt-2">
         {views.map((v) => (
           <button
             key={v.id}
             type="button"
             onClick={() => setActiveView(v.id)}
-            className={`aspect-square p-2 rounded bg-white border flex items-center justify-center overflow-hidden cursor-pointer transition-all ${
-              activeView === v.id ? 'border-black ring-1 ring-black' : 'border-neutral-200 hover:border-neutral-400'
+            className={`w-16 h-16 sm:w-20 sm:h-20 p-2.5 rounded-2xl bg-white border-2 flex items-center justify-center overflow-hidden cursor-pointer transition-all duration-300 ${
+              activeView === v.id 
+                ? 'border-black shadow-sm scale-95' 
+                : 'border-neutral-200/80 hover:border-neutral-300 hover:scale-105'
             }`}
           >
             <img

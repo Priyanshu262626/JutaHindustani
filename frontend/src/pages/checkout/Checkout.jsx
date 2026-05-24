@@ -61,7 +61,7 @@ export default function Checkout() {
 
   return (
     <div className="bg-white min-h-screen">
-      <div className="max-w-7xl mx-auto px-6 py-12">
+      <div className="max-w-8xl mx-auto px-6 py-12">
         
         {/* Back Link */}
         <Link to="/cart" className="inline-flex items-center text-gray-400 hover:text-black mb-8 transition-colors text-xs font-bold uppercase tracking-wider">

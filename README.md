@@ -1,4 +1,4 @@
-# 👟 JutaHindustani — E-Commerce Shoe Platform
+# 👟 Soltrix — E-Commerce Shoe Platform
 
 [![Spring Boot](https://img.shields.io/badge/Spring%20Boot-3.3.0-green?style=for-the-badge&logo=springboot)](https://spring.io/projects/spring-boot)
 [![React](https://img.shields.io/badge/React-19.2-blue?style=for-the-badge&logo=react)](https://react.dev)
@@ -66,10 +66,10 @@ Follow these steps to configure, seed, and launch the application in your local 
 ### Step 1: Database Setup (MySQL)
 
 1. Make sure your local **MySQL Server** is running.
-2. The application is configured to automatically create the database `jutahindustani` if it does not already exist.
+2. The application is configured to automatically create the database `soltrix` if it does not already exist.
 3. Open `backend/src/main/resources/application.properties` and customize the connection string and credentials:
    ```properties
-   spring.datasource.url=jdbc:mysql://localhost:3306/jutahindustani?createDatabaseIfNotExist=true&useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=UTC
+   spring.datasource.url=jdbc:mysql://localhost:3306/soltrix?createDatabaseIfNotExist=true&useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=UTC
    spring.datasource.username=YOUR_MYSQL_USERNAME
    spring.datasource.password=YOUR_MYSQL_PASSWORD
    ```

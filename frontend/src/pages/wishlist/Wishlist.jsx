@@ -11,7 +11,7 @@ export default function Wishlist() {
     <div className="bg-white min-h-screen">
       {/* Header */}
       <div className="border-b border-gray-100 py-8 px-6">
-        <div className="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
+        <div className="max-w-8xl mx-auto flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
           <div className="text-left">
             <Link to="/shop" className="flex items-center text-xs font-bold uppercase tracking-wider text-gray-500 hover:text-black transition-colors mb-2 gap-1">
               <ArrowLeft size={12} />
@@ -31,7 +31,7 @@ export default function Wishlist() {
       </div>
 
       {/* Main Grid Content */}
-      <div className="max-w-7xl mx-auto px-6 py-12">
+      <div className="max-w-8xl mx-auto px-6 py-12">
         {wishlist.length === 0 ? (
           /* Empty State */
           <div className="text-center py-20 max-w-md mx-auto">
@@ -40,7 +40,7 @@ export default function Wishlist() {
             </div>
             <h2 className="text-xl font-extrabold text-black uppercase tracking-wider">Your Wishlist is Empty</h2>
             <p className="text-sm text-gray-400 mt-2 leading-relaxed">
-              Explore our premium collection of Hindustani shoes and save your favorite styles here for later checkout.
+              Explore our premium collection of Soltrix shoes and save your favorite styles here for later checkout.
             </p>
             <Link to="/shop" className="inline-block mt-8 border border-black bg-black text-white hover:bg-white hover:text-black font-bold text-xs uppercase tracking-widest px-8 py-3.5 rounded transition-all duration-200">
               Explore Products

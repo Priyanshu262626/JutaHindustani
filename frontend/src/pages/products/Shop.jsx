@@ -88,7 +88,7 @@ export default function Shop() {
     <div className="bg-white min-h-screen">
       {/* Page Header */}
       <div className="border-b border-gray-100 py-6 px-6">
-        <div className="max-w-7xl mx-auto flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
+        <div className="max-w-8xl mx-auto flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
           <h1 className="text-3xl font-black text-black uppercase tracking-tighter text-left">
             {category} Footwear ({products.length})
           </h1>
@@ -104,7 +104,7 @@ export default function Shop() {
       </div>
 
       {/* Main Grid Content */}
-      <div className="max-w-7xl mx-auto px-6 py-8">
+      <div className="max-w-8xl mx-auto px-6 py-8">
         <div className="grid grid-cols-1 lg:grid-cols-4 gap-8">
           
           {/* Desktop Filter Sidebar (Left Column) */}

@@ -21,13 +21,13 @@ export default function Navbar() {
 
   return (
     <nav className="bg-white border-b border-gray-200 sticky top-0 z-50 px-6 py-4">
-      <div className="max-w-7xl mx-auto flex justify-between items-center">
+      <div className="max-w-8xl mx-auto flex justify-between items-center">
         {/* Stark Black Logo */}
         <Link 
           to="/" 
-          className="flex items-center text-xl font-extrabold tracking-widest text-black hover:opacity-80 transition-opacity"
+          className="flex items-center text-2xl md:text-3xl font-black tracking-[0.22em] text-black hover:opacity-80 transition-opacity"
         >
-          JUTA HINDUSTANI
+          SOLTRIX
         </Link>
 
         {/* Desktop Navigation Links */}
